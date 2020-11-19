@@ -226,7 +226,7 @@ ftpOutbound:
 dpOutbound:
   bootstrapServers: "jdpeventhub.servicebus.windows.net:9093"
   #checkConnectivity: "false"
-  reconnectFrequency: "2000"
+  #reconnectFrequency: "2000"
   #reconnectionAttempts: "1"
   publisher:
     topic: "jdpevent3"
