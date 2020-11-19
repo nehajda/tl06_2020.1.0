@@ -28,18 +28,29 @@ server:
 # ---------------------------------------------------------------------------------------------------------
 # Outbound Endpoint Properties
 
+# Copy the below content into src/main/resources/config-repo/MessageBroker/MessageBroker-custom.yaml to enable the properties for this endpoint
 # JMS inbound endpoint
 jmsInbound:
   queue:
+    name: MB_INBOUND
     brokerURL: "failover://tcp://IN2NPDITL06:61616"
     user: "admin"
     password-secure: "admin"
-    maxConnections: "30"
-    concurrentConsumers: "30"
+    maxConnections: "5"
+    concurrentConsumers: "3"
     initialRedeliveryDelay: "20000"
     redeliveryDelay: "20000"
     sessionCacheSize: "100"
     maximumRedeliveries: "5"
+    #Setting this flag as true will try to connect to the JMS queue at deployment time. 
+    #Mark as false unless queue Broker is configured and up.
+    checkConnectivity: false 
+    #In case the above checkConnectivity is true the reconnection frequency to the configured broker. 
+    #This value is not considered if the checkConnectivity flag is set as false.
+    reconnectFrequency : 2000
+    #In case the above checkConnectivity is true the reconnection Attempts to the configured broker. 
+    #This value is not considered if the checkConnectivity flag is set as false.
+    reconnectionAttempts : 1
     
 # JMS outbound endpoint
 jmsOutbound:
@@ -47,8 +58,8 @@ jmsOutbound:
     brokerURL: "failover://tcp://IN2NPDITL06:61616"
     user: "admin"
     password-secure: "admin"
-    maxConnections: "30"
-    concurrentConsumers: "30"
+    maxConnections: "5"
+    concurrentConsumers: "3"
     initialRedeliveryDelay: "20000"
     redeliveryDelay: "20000"
     sessionCacheSize: "100"
