@@ -1,0 +1,42 @@
+!jmb-configuration-v1
+
+name: JMB
+outboundEndpoints:
+- name: notRouted
+  flow:
+    name: nullOutboundFlow          
+- name: WMA
+  flow:
+    name: fileOutboundFlow
+    parameters:
+    - name: "path"
+      value: "./outbound/test-output-wms"
+    - name: "fileName"
+      value: "outputMessageWMA.xml"
+- name: ACK.GLOBAL
+  flow:
+    name: fileOutboundFlow
+    parameters:
+    - name: "path"
+      value: "./outbound/gs1-ack"
+    - name: "fileName"
+      value: "gs1-ack.xml"
+- name: LOC.DC0001
+  flow:
+    name: fileOutboundFlow
+    parameters:
+    - name: "path"
+      value: "./outbound/gs1-ack"
+    - name: "fileName"
+      value: "gs1-ack-error.xml"
+outboundMappings:
+  - receiver: 'WMA.WEST|WMA.EAST'
+    request: '*:*:*'
+    outboundEndpoint: 'WMA'
+  - receiver: 'LOC.DC0001'
+    request: '*:*:*'
+    outboundEndpoint: 'LOC.DC0001'
+  - receiver: 'NOT.ROUTED'
+    request: '*:*:*'
+    outboundEndpoint: 'notRouted'
+ 
